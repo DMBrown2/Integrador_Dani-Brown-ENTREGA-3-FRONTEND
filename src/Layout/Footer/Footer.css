@@ -1,0 +1,111 @@
+/* ESTILOS FOOTER  */
+
+.main-footer {
+    background-color: var(--light-color);
+    color: var(--color-terciario);
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    padding: 15px 20px 15px 16px;
+
+
+    section {
+        width: 100%;
+        border-bottom: 1px solid var(--lighter-color)
+    }
+
+    .footer-social {
+        margin-right: 15px;
+        padding-bottom: 15px;
+
+        .descripcion-social {
+            font-size: 12px;
+            font-weight: 500;
+        }
+
+        .iconos-social {
+
+            .icono-ig,
+            .icono-fb {
+                display: flex;
+                align-items: center;
+                gap: 5px;
+                margin-top: 10px;
+                font-size: 12px;
+
+                i {
+                    color: var(--color-secundario);
+                }
+            }
+        }
+    }
+
+    .footer-contacto {
+        margin-right: 15px;
+        padding-bottom: 15px;
+
+        .titu-contacto {
+            font-size: 12px;
+            font-weight: 500;
+            margin-bottom: 8px;
+        }
+
+        .direccion,
+        .mail,
+        .telefono {
+            display: flex;
+            gap: 8px;
+
+            p {
+                text-align: left;
+                font-size: 11px;
+                font-weight: 400;
+            }
+
+            .icono {
+                font-size: 12px;
+                color: var(--color-secundario);
+            }
+        }
+    }
+
+    .footer-info {
+        position: relative;
+        border-bottom: none;
+
+        .info,
+        p {
+            margin-right: 15px;
+            padding-bottom: 25px;
+            width: 70%;
+            font-size: 12px;
+            font-weight: 400;
+        }
+
+        .contenedor-logo {
+            position: absolute;
+            width: 42px;
+            right: 10px;
+            bottom: 3px;
+        }
+
+    }
+}
+
+@media screen and (width > 768px) {
+    .main-footer {
+        display: flex;
+        align-items: center;
+
+        section {
+            flex: 1;
+            border: none;
+            border-right: 1px solid var(--lighter-color);
+            height: 135px;
+        }
+
+        .footer-info {
+            border-right: none;
+        }
+    }
+}

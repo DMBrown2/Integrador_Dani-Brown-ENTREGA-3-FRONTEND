@@ -1,0 +1,118 @@
+/* main {
+    margin-top: 100px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    flex-grow: 10;
+} */
+
+.titulo-form {
+    width: 235px;
+    margin-bottom: 16px;
+    font-size: 10px;
+    font-weight: 400;
+    border-bottom: var(--lighter-color) 1px solid;
+}
+
+.form-container {
+
+    .form {
+        position: relative;
+        width: 370px;
+        background-color: var(--lighter-color);
+        border-radius: 10%;
+        padding: 35px;
+        margin-bottom: 16px;
+
+        .input-group {
+            margin-bottom: 40px;
+
+            input[type=text],
+            input[type=email],
+            input[type=password],
+            input[type=number],
+            input[type=date] {
+                margin-bottom: 15px;
+                border: 1px solid var(--color-secundario);
+                font-family: var(--font);
+                width: 200px;
+            }
+
+            input[type=checkbox],
+            input[type=radio],
+            input[type=image] {
+                margin-bottom: 15px;
+                font-family: var(--font);
+            }
+
+            label {
+                display: flex;
+                font-size: 12px;
+                font-weight: 500;
+            }
+
+            .input-genero,
+            .input-clasif,
+            .input-inline {
+                font-size: 11px;
+                display: flex;
+                align-items: start;
+                gap: 2px;
+                flex-wrap: wrap;
+
+                label {
+                    font-size: 12px;
+                }
+            }
+
+            .input-imagen {
+                margin-bottom: 15px;
+            }
+
+        }
+    }
+
+    .btn-registro {
+        position: absolute;
+        bottom: 8px;
+        left: 50%;
+
+        .btn {
+            color: var(--color-primario);
+            border: none;
+            background-color: var(--color-secundario);
+            width: 70px;
+            height: 33px;
+            font-family: var(--font);
+            transform: translateX(-50%);
+
+            transition: background-color .25s ease-in-out, color .25s ease-in-out;
+
+            &:hover {
+                cursor: pointer;
+                background-color: var(--hover-color);
+                color: var(--color-secundario);
+            }
+        }
+    }
+
+}
+
+
+
+@media screen and (width > 768px) {
+    main {
+        /* margin-top: 130px; */
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .input-group {
+        width: 100%;
+        height: 100%;
+    }
+}

@@ -1,0 +1,129 @@
+main {
+    margin-top: 100px;
+}
+
+.detalle-card1 {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    .contenedor-imagen {
+        position: relative;
+        background-color: var(--light-color);
+        width: 350px;
+        height: 450px;
+
+        .detalle-img {
+        position: absolute;
+        left: 28px;
+        top: 25px;
+        height: 400px;
+        padding: 25px;
+        }
+
+        .status {
+            position: absolute;
+            background-color: var(--color-secundario);
+            padding: 3px 6px;
+            color: var(--color-primario);
+            top: 10px;
+            left: 10px;
+            font-size: 12px;
+            border-radius: 8px;
+        }
+
+    }
+
+    .contenedor-info {
+        position: relative;
+        width: 350px;
+        height: 250px;
+        border: 1px solid var(--light-color);
+        padding: 15px;
+        margin-bottom: 20px;
+
+        .genero {
+            font-size: 15px;
+            font-weight: 400;
+            color: var(--color-secundario);
+            margin-bottom: 3px;
+        }
+
+        .titulo-detalle {
+            font-size: 22px;
+            font-weight: 500;
+            margin-bottom: 8px;
+        }
+
+        .precio {
+            font-size: 20px;
+            font-weight: 600;
+            color: var(--color-secundario);
+            margin-bottom: 8px;
+        }
+
+        .detalle-info {
+            font-size: 11px;
+            font-weight: 300;
+        }
+
+        .cant-prod {
+            position: absolute;
+            bottom: 5px;
+            height: 35px;
+            background-color: var(--color-primario);
+            text-align: center;
+            border-color: var(--light-color);
+            font-family: var(--font);
+            font-size: 12px;
+
+        }
+
+        .btn-comprar {
+            position:absolute;
+            bottom: 0;
+            left: 50%;
+            text-align: center;
+    
+            button {
+                color: var(--color-primario);
+                border: none;
+                background-color: var(--color-secundario);
+                width: 60px;
+                height: 33px;
+                transform: translateX(-50%);
+                margin-bottom: 5px;
+                font-family: var(--font);
+                font-size: 12px;
+                transition: background-color .25s ease-in-out, color .25s ease-in-out;
+    
+                &:hover {
+                    cursor: pointer;
+                    background-color: var(--hover-color);
+                    color: var(--color-secundario);
+                }
+    
+            }
+        }
+    }
+}
+
+@media screen and (width > 768px) {
+
+    main {
+        margin-top: 150px;
+    }
+
+    .detalle-card1 {
+        display: flex;
+        flex-direction: row;
+        align-items: start;
+        justify-content: center;
+        gap: 8px;
+
+        .contenedor-info {
+            height: 450px;
+        }
+    }
+
+}

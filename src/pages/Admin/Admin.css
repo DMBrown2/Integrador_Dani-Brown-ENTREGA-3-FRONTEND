@@ -1,0 +1,160 @@
+.titulo-descripcion {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 20px;
+
+    .titulo-admin {
+        font-size: 20px;
+        font-weight: 400;
+        border-bottom: var(--lighter-color) 1px solid;
+        width: 130px
+    }
+
+    p {
+        font-size: 15px;
+        font-weight: 300;
+    }
+}
+
+button {
+    font-family: var(--font);
+    color: var(--color-primario);
+    border: none;
+    background-color: var(--color-secundario);
+    width: 95px;
+    height: 33px;
+    transition: background-color .25s ease-in-out, color .25s ease-in-out;
+
+    &:hover {
+        cursor: pointer;
+        background-color: var(--hover-color);
+        color: var(--color-secundario);
+    }
+}
+
+.admin-form-table {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+
+    .admin-form-section {
+        background-color: var(--lighter-color);
+        border-radius: 10%;
+        padding: 25px;
+        margin-bottom: 16px;
+
+        .input-group,
+        .input-imagen {
+            margin-bottom: 10px;
+        }
+        
+        input[type=text],
+        input[type=number],
+        textarea,
+        select {
+            display: block;
+            width: 100%;
+                border: 1px solid var(--color-secundario);
+                font-family: var(--font);
+        }
+    }
+
+    .table-responsive {
+        width: 100%;
+        overflow-x: scroll;
+
+        .admin-table {
+            border-collapse: collapse;
+            margin: 15px;
+            border: 1px solid var(--color-secundario);
+
+            th {
+                padding: 8px 15px;
+                background-color: var(--color-primario);
+                color: var(--color-terciario);
+                font-weight: 500;
+                font-size: 15px;
+            }
+
+            tbody tr:nth-child(even) {
+                background-color: var(--lighter-color);
+            }
+
+            tr {
+                >td {
+                    padding: 8px;
+                    font-size: 14px;
+                }
+            }
+
+            .image-cell {
+                text-align: center;
+
+                .table-image {
+                    height: 150px;
+                    object-fit: contain;
+                    box-shadow: 4px 4px 4px #666;
+                }
+            }
+
+            .name-cell,
+            .precio-cell {
+                text-align: center;
+                font-weight: 500;
+            }
+
+            .coment-cell {
+                font-size: 10px;
+            }
+
+            .tools-cell {
+                .icon-container {
+                    display: flex;
+                    gap: 8px;
+                    justify-content: center;
+
+                    .btn {
+                        background-color: var(--color-secundario);
+                        border: none;
+                        outline: none;
+                        padding: 4px;
+                        width: 20px;
+                        height: 100%;
+                        color: var(--color-primario);
+                        border-radius: 1px;
+                        transition: background-color .25s ease-in-out, color .25s ease-in-out;
+
+                        &:hover {
+                            cursor: pointer;
+                            background-color: var(--hover-color);
+                            color: var(--color-secundario);
+                        }
+                    }
+                }
+
+            }
+
+        }
+
+    }
+}
+
+@media screen and (width > 768px) {
+
+    .admin-form-table {
+        display: flex;
+        flex-wrap: wrap;
+
+        .admin-form-section {
+            width: 100%;
+        }
+
+
+        .table-responsive {
+            overflow-x: visible;
+        }
+    }
+}
