@@ -4,6 +4,7 @@ import Swal from "sweetalert2";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
 import { useForm } from "react-hook-form";
+import './usuarios.css'
 
 const URL = import.meta.env.VITE_API_URL
 
@@ -66,35 +67,11 @@ export default function Usuarios() {
 };
 
   return (
-    <div>
-      <h1>Usuarios Registrados</h1>
+    <>
+   <h1 className="titu-usuarios">Usuarios Registrados</h1>
 
-      <div className="table-container">
-      <table>
-        <thead>
-          <tr>
-            <th>ID</th>
-            <th>Nombre</th>
-            <th>Email</th>
-            <th>Acciones</th>
-          </tr>
-        </thead>
-        <tbody>
-          {usuarios.map((user) => (
-            <tr key={user.id}>
-              <td>{user.id}</td>
-              <td>{user.nombre}</td>
-              <td>{user.email}</td>
-              <td>
-                <button onClick={() => eliminarUsuario(user.id)}><FontAwesomeIcon icon={faTrash}/></button>
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-      </div>
-
-<div className="form-container">
+    <div className="usuarios-seccion">
+    <div className="form-container">
       <form className="form" onSubmit={handleSubmit(onSubmit)}>
             <div className="input-group">
               <div className="input-nombre">
@@ -139,29 +116,7 @@ export default function Usuarios() {
                 />
 
               </div>
-
-
-              {/* <div className="input-mensaje">
-                <label htmlFor="mensaje">Mensaje:</label>
-                <textarea
-                  type="text"
-                  name="mensaje"
-                  id="mensaje"
-                  rows={5}
-                  pattern="[A-Za-z0-9._+\-']+@[A-Za-z0-9.\-]+\.[A-Za-z]{2,}$"
-                  defaultValue={"                    "}
-                  {...register('mensaje', {
-                    required: {
-                      value: true,
-                      message: 'Campo requerido',
-                    },
-                    minLength: { value: 6, message: 'Debe tener al menos 6 caracteres' },
-                    maxLength: { value: 150, message: 'Máximo 150 caracteres' },
-                  })}
-                />
-                {errors.mensaje && <span>{errors.mensaje.message}</span>}
-              </div> */}
-
+           
               <div className="btn-contactar">
                 <button 
                 className="btn" 
@@ -170,9 +125,41 @@ export default function Usuarios() {
                   Agregar usuario
                 </button>
               </div>
+
+              
             </div>
           </form>
           </div>
-    </div>
+    
+
+          <div className="table-container">
+      <table>
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Nombre</th>
+            <th>Email</th>
+            <th>Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          {usuarios.map((user) => (
+            <tr key={user.id}>
+              <td>{user.id}</td>
+              <td>{user.nombre}</td>
+              <td>{user.email}</td>
+              <td>
+                <button onClick={() => eliminarUsuario(user.id)}><FontAwesomeIcon className="icon" icon={faTrash}/></button>
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+      </div>
+      </div>
+
+
+    </>
   );
+  
 }

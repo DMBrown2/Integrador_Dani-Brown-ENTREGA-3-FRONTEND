@@ -1,6 +1,7 @@
-import {faFaceAngry, faICursor } from '@fortawesome/free-solid-svg-icons';
 import './Footer.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faFacebook, faInstagram } from '@fortawesome/free-brands-svg-icons';
+import { faEnvelope, faLocationDot, faPhone } from '@fortawesome/free-solid-svg-icons';
 
 
 export default function Footer() {
@@ -12,25 +13,25 @@ export default function Footer() {
     </div>
     <div className="iconos-social">
       <div className="icono-ig">
-        <FontAwesomeIcon icon={faICursor} className="fa-brands fa-square-instagram icono" /> <p>@instagram</p>
+        <FontAwesomeIcon icon={faInstagram} className="icono" /> <p>@instagram</p>
       </div>
       <div className="icono-fb">
-        <FontAwesomeIcon icon={faFaceAngry} className="fa-brands fa-square-facebook icono" /> <p>@facebook</p>
+        <FontAwesomeIcon icon={faFacebook} className="icono" /> <p>@facebook</p>
       </div>
     </div>
   </section>
   <section className="footer-contacto">
     <p className="titu-contacto">Contactanos</p>
     <div className="direccion">
-      <i className="fa-solid fa-location-dot icono" />{" "}
+      <FontAwesomeIcon className='icono' icon={faLocationDot} />
       <p>Lafinur 3396, CABA.</p>
     </div>
     <div className="mail">
-      <i className="fa-solid fa-envelope icono" />
+      <FontAwesomeIcon className='icono' icon={faEnvelope} />
       <p>hello@liberexpress.com</p>
     </div>
     <div className="telefono">
-      <i className="fa-solid fa-phone-volume icono" />
+    <FontAwesomeIcon className='icono' icon={faPhone} />
       <p>(011) 1521864648</p>
     </div>
   </section>
