@@ -109,13 +109,13 @@ const handleClearCart = () => {
     text: "Esto eliminará todos los productos del carrito.",
     icon: "warning",
     showCancelButton: true,
-    confirmButtonColor: "#d33",
+    cancelButtonText: "Cancelar",
     cancelButtonColor:  "#3085d6",
     confirmButtonText: "Sí, vaciar carrito",
-    cancelButtonText: "Cancelar",
+    confirmButtonColor: "#d33",
     customClass: {
-      confirmButton: "swal-confirm-btn", 
       cancelButton: "swal-cancel-btn", 
+      confirmButton: "swal-confirm-btn", 
     },
   }).then((result) => {
     if (result.isConfirmed) {

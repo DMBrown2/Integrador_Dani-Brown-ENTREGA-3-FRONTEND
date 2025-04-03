@@ -15,13 +15,13 @@ export default function Usuarios() {
     obtenerUsuarios();
   }, []);
 
-   const {
-      register,
-      handleSubmit,
-      reset,
-      formState: { errors, isValid },
-    } = useForm({ mode: "onChange" });
-  
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors, isValid },
+  } = useForm({ mode: "onChange" });
+
 
 
   const obtenerUsuarios = async () => {
@@ -47,119 +47,133 @@ export default function Usuarios() {
   };
 
 
- // Eliminar usuario (DELETE)
- const eliminarUsuario = async (id) => {
-  const confirm = await Swal.fire({
-    title: "¿Eliminar usuario?",
-    showCancelButton: true,
-    confirmButtonText: "Sí, eliminar",
-  });
+  // Eliminar usuario (DELETE)
+  const eliminarUsuario = async (id) => {
+    const confirm = await Swal.fire({
+      title: "¿Eliminar usuario?",
+      showCancelButton: true,
+      confirmButtonText: "Sí, eliminar",
+      customClass: {
+        confirmButton: "swal-wide-button-confirm",
+        cancelButton: "swal-wide-button-cancel",
+      }
+    });
 
-  if (confirm.isConfirmed) {
-    try {
-      await axios.delete(`${URL}/users/${id}`);
-      obtenerUsuarios();
-    } catch (error) {
-      console.error("Error al eliminar usuario:", error);
-      Swal.fire("Error", "No se pudo eliminar el usuario.", "error");
+    if (confirm.isConfirmed) {
+      try {
+        await axios.delete(`${URL}/users/${id}`);
+        obtenerUsuarios();
+
+       Swal.fire("¡Eliminado!", "Usuario eliminado correctamente.", "success")
+
+
+      } catch (error) {
+        console.error("Error al eliminar usuario:", error);
+        Swal.fire("Error", "No se pudo eliminar el usuario.", "error");
+      }
     }
-  }
-};
+  };
 
   return (
     <>
-   <h1 className="titu-usuarios">Usuarios Registrados</h1>
+      <div className="usuarios-seccion">
+        <h1 className="titu-usuarios">Usuarios Registrados</h1>
 
-    <div className="usuarios-seccion">
-    <div className="form-container">
-      <form className="form" onSubmit={handleSubmit(onSubmit)}>
-            <div className="input-group">
-              <div className="input-nombre">
-                <label htmlFor="NOMBRE"> Nombre y Apellido:</label>
-                <input
-                  type="text"
-                  name="nombre"
-                  id="nombre"
-                  placeholder="Nombre y Apellido"
-                  pattern="^[a-zA-Z ]+$"
-                  autoComplete="on"
-                  {...register('nombre', {
-                    required: {
-                      value: true,
-                      message: 'Campo requerido',
-                    },
-                    maxLength: { value: 20, message: 'Max length is 20' },
-                    minLength: { value: 3, message: 'Min length is 3' },
-                  })}
-                />
-                 {errors.nombre && <span>{errors.nombre.message}</span>}
+        <div className="contenido-usuarios">
+
+          <div className="form-container">
+            <form className="form" onSubmit={handleSubmit(onSubmit)}>
+              <div className="input-group">
+                <div className="input-nombre">
+                  <label htmlFor="NOMBRE"> Nombre y Apellido:</label>
+                  <input
+                    type="text"
+                    name="nombre"
+                    id="nombre"
+                    placeholder="Nombre y Apellido"
+                    pattern="^[a-zA-Z ]+$"
+                    autoComplete="on"
+                    {...register('nombre', {
+                      required: {
+                        value: true,
+                        message: 'Campo requerido',
+                      },
+                      maxLength: { value: 20, message: 'Max length is 20' },
+                      minLength: { value: 3, message: 'Min length is 3' },
+                    })}
+                  />
+                  {errors.nombre && <span>{errors.nombre.message}</span>}
+                </div>
+
+
+                <div className="input-email">
+                  <label htmlFor="correo">Email:</label>
+                  <input
+                    type="email"
+                    name="email"
+                    id="email"
+                    placeholder="email"
+                    pattern="[A-Za-z0-9._+\-']+@[A-Za-z0-9.\-]+\.[A-Za-z]{2,}$"
+                    autoComplete="on"
+                    {...register('email', {
+                      required: {
+                        value: true,
+                        message: 'This field is required',
+                      },
+                      maxLength: { value: 20, message: 'Max length is 20' },
+                      minLength: { value: 3, message: 'Min length is 3' },
+                    })}
+                  />
+
+                </div>
+
+                <div className="btn-contactar">
+                  <button
+                    className="btn"
+                    type="submit"
+                    disabled={!isValid}>
+                    Agregar usuario
+                  </button>
+                </div>
+
+
               </div>
-
-
-              <div className="input-email">
-                <label htmlFor="correo">Email:</label>
-                <input
-                  type="email"
-                  name="email"
-                  id="email"
-                  placeholder="email"
-                  pattern="[A-Za-z0-9._+\-']+@[A-Za-z0-9.\-]+\.[A-Za-z]{2,}$"
-                  autoComplete="on"
-                  {...register('email', {
-                    required: {
-                      value: true,
-                      message: 'This field is required',
-                    },
-                    maxLength: { value: 20, message: 'Max length is 20' },
-                    minLength: { value: 3, message: 'Min length is 3' },
-                  })}
-                />
-
-              </div>
-           
-              <div className="btn-contactar">
-                <button 
-                className="btn" 
-                type="submit"
-                disabled={!isValid}>
-                  Agregar usuario
-                </button>
-              </div>
-
-              
-            </div>
-          </form>
+            </form>
           </div>
-    
+
 
           <div className="table-container">
-      <table>
-        <thead>
-          <tr>
-            <th>ID</th>
-            <th>Nombre</th>
-            <th>Email</th>
-            <th>Acciones</th>
-          </tr>
-        </thead>
-        <tbody>
-          {usuarios.map((user) => (
-            <tr key={user.id}>
-              <td>{user.id}</td>
-              <td>{user.nombre}</td>
-              <td>{user.email}</td>
-              <td>
-                <button onClick={() => eliminarUsuario(user.id)}><FontAwesomeIcon className="icon" icon={faTrash}/></button>
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-      </div>
+            <table>
+              <thead>
+                <tr>
+                  <th>ID</th>
+                  <th>Nombre</th>
+                  <th>Email</th>
+                  <th>Mensaje</th>
+                  <th>Eliminar</th>
+                </tr>
+              </thead>
+              <tbody>
+                {usuarios.map((user) => (
+                  <tr key={user.id}>
+                    <td>{user.id}</td>
+                    <td>{user.nombre}</td>
+                    <td>{user.email}</td>
+                    <td>{user.mensaje}</td>
+                    <td>
+                      <button onClick={() => eliminarUsuario(user.id)}><FontAwesomeIcon className="icon" icon={faTrash} /></button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        
+        </div>
       </div>
 
 
     </>
   );
-  
+
 }

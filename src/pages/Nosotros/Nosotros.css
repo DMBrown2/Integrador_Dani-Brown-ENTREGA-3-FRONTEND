@@ -161,11 +161,11 @@ main {
             &:hover {
                 box-shadow: 0 0 5px 1px var(--light-color);
 
-                .card-icon-container,
-                .icon {
-                    transform: translateY(0);
-                    opacity: 1;
-                    visibility: visible;
+                .card-icon-container,.icon {
+                        transform: translateY(0);
+                        opacity: 1;
+                        visibility: visible;
+                    }
                 }
             }
         }
@@ -183,7 +183,7 @@ main {
                 display: flex;
                 flex-direction: column;
                 justify-content: center;
-                align-items: center;
+                align-items: start;
                 border: none;
                 background-color: var(--lighter-color);
                 width: 100px;
@@ -251,7 +251,7 @@ main {
             }
         }
     }
-}
+
 
 
 @media screen and (width > 768px) {
@@ -291,9 +291,10 @@ main {
                     flex-direction: row-reverse;
                     align-items: start;
 
-                    .parrafo-mision, p {
-                       text-align: left; 
-                       margin-right: 16px;
+                    .parrafo-mision,
+                    p {
+                        text-align: left;
+                        margin-right: 16px;
                     }
 
                     .img-mision {

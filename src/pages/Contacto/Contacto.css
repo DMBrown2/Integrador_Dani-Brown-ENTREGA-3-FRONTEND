@@ -59,7 +59,12 @@
                 bottom: 10px;
                 left: 50%;
 
-                .btn {
+                button:disabled {
+                    background-color: #ccc;
+                    cursor: not-allowed;
+                 
+
+                button {
                     color: var(--color-primario);
                     border: none;
                     background-color: var(--color-secundario);
@@ -75,6 +80,9 @@
                         background-color: var(--hover-color);
                         color: var(--color-secundario);
                     }
+
+                }
+
                 }
             }
         }

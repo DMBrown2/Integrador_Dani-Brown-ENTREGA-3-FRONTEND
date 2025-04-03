@@ -1,4 +1,8 @@
 import './Nosotros.css'
+import headerequipo from '../../assets/images/equipo/headerequipo.webp'
+import pp from '../../assets/images/equipo/pp.jpg.jfif'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faInstagram, faLinkedin } from '@fortawesome/free-brands-svg-icons'
 
 
 export default function Nosotros() {
@@ -8,7 +12,7 @@ export default function Nosotros() {
                 <div className="header-nosotros">
                     <div className="imagen-libro">
                         <img
-                            src="/assets/images/equipo/book-background-kjrczgc6vvrz6266.webp"
+                            src={headerequipo}
                             alt="libro abierto"
                         />
                     </div>
@@ -78,16 +82,16 @@ export default function Nosotros() {
                             {" "}
                             {/* IMAGEN + ICONOS SOCIAL */}
                             <div className="img">
-                                <img src="/assets/images/equipo/pp.jpg.jfif" alt="" />
+                                <img src={pp} alt="" />
                             </div>
                             <div className="card-icon-container">
                                 <div className="icon">
-                                    <i className="fa-brands fa-square-instagram icono-ig" />
+                                    <FontAwesomeIcon icon={faInstagram} />
                                     <p className="handle-ig">@dani.brown</p>
                                 </div>
                                 <div className="icon">
-                                    <i className="fa-brands fa-facebook icono-fb" />
-                                    <p className="handle-fb">@dani.brown</p>
+                                    <FontAwesomeIcon icon={faLinkedin} />
+                                    <p className="handle-fb">daniela-brown-estevez</p>
                                 </div>
                             </div>
                         </div>
@@ -110,16 +114,16 @@ export default function Nosotros() {
                             {" "}
                             {/* IMAGEN + ICONOS SOCIAL */}
                             <div className="img">
-                                <img src="....." alt="" />
+                                <img src={pp} alt="" />
                             </div>
                             <div className="card-icon-container">
                                 <div className="icon">
-                                    <i className="fa-brands fa-square-instagram icono-ig" />
-                                    <p className="handle-ig">@vale.brown</p>
+                                    <FontAwesomeIcon icon={faInstagram} />
+                                    <p className="handle-ig">@dani.brown</p>
                                 </div>
                                 <div className="icon">
-                                    <i className="fa-brands fa-facebook icono-fb" />
-                                    <p className="handle-fb">@vale.brown</p>
+                                    <FontAwesomeIcon icon={faLinkedin} />
+                                    <p className="handle-fb">daniela-brown-estevez</p>
                                 </div>
                             </div>
                         </div>

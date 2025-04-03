@@ -142,6 +142,12 @@ button {
     }
 }
 
+.swal-cancel-btn, .swal-confirm-btn {
+    min-width: 120px !important; 
+    padding: 10px 20px !important; 
+    font-size: 16px !important;  
+}
+
 @media screen and (width > 768px) {
 
     .admin-form-table {

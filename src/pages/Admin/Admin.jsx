@@ -32,15 +32,17 @@ export default function Admin() {
         console.log("🛠️ editProduct cambió:", editProduct)
 
         if (editProduct) {
-            console.log("📌 editProduct existe:", editProduct);
+            console.log("📌 editProduct existe:", editProduct.title);
             console.log("🆔 ID del producto:", editProduct.id)
+
             setValue("image", editProduct.image)
-            setValue("title", editProduct.title)
+            setValue("title", editProduct.title || "", { shouldValidate: true })
             setValue("genre", editProduct.genre)
             setValue("category", editProduct.category)
             setValue("price", editProduct.price)
             setValue("description", editProduct.description)
         } else {
+            console.log("⚠️ editProduct es null o no tiene título")
             reset()
         }
 
@@ -78,6 +80,10 @@ export default function Admin() {
     async function onSubmit(data) {
         console.log("🚀 Enviando datos del formulario...", data)
         console.log("📦 Datos:", data)
+
+        if (!data.title) {
+            console.error("❌ Error: title está vacío");
+        }
 
         try {
 
@@ -169,8 +175,12 @@ export default function Admin() {
                 cancelButtonText: "Cancelar",
                 confirmButtonText: "Sí, borrar!",
                 confirmButtonColor: "#F00",
-                cancelButtonColor: "#DDD",
+                cancelButtonColor: "#3085d6",
                 reverseButtons: true,
+                customClass: {
+                    cancelButton: "swal-cancel-btn", 
+                    confirmButton: "swal-confirm-btn", 
+                  },
             }).then(async (result) => {
                 if (result.isConfirmed) {
                     await axios.delete(`${URL}/products/${id}`);
@@ -220,15 +230,13 @@ export default function Admin() {
                             <label htmlFor="" id='titulo'>Título: </label>
                             <input
                                 type="text"
-                                {...register('title', {
-                                    required: { value: true, message: 'This field is required' },
-                                    maxLength: { value: 20, message: 'Max length is 20' },
-                                    minLength: { value: 3, message: 'Min length is 3' },
-                                })}
+                                {...register("title", { required: "El título es obligatorio" })}
                             />
-                            {errors.name && (
+                            {errors.title && <span className="error">{errors.title.message}</span>}
+
+                            {/* {<errors className="title"></errors> && (
                                 <span className="input-error">{errors.title?.message}</span>
-                            )}
+                            )} */}
                         </div>
 
                         <div className="input-group">
@@ -249,10 +257,10 @@ export default function Admin() {
                         <div className="input-group">
                             <label htmlFor="">Categoria: </label>
                             <select
-                                  value={watch("category") || ""}
-                                  {...register('category', {
-                                      required: "This field is required"
-                                  })}
+                                value={watch("category") || ""}
+                                {...register('category', {
+                                    required: "This field is required"
+                                })}
                             >
                                 <option value="" disabled>
                                     Selecciona una categoria
