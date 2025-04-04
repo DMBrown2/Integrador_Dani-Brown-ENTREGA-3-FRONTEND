@@ -74,6 +74,7 @@
       .btn:disabled {
         background-color: #ccc;
         cursor: not-allowed;
+        color: var(--color-primario);
       }
     }
 

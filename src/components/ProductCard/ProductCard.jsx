@@ -61,7 +61,7 @@ export default function Card({product}) {
                   </div>
                   <div className="card-review">(1 review)</div>
                 </div>
-                <div className="card-price">{product.price}</div>
+                <div className="card-price">${product.price}</div>
               </div>
             </article>
   )

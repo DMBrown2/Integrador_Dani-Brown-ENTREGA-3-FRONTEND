@@ -58,27 +58,28 @@
                 position: absolute;
                 bottom: 10px;
                 left: 50%;
-
-                button:disabled {
-                    background-color: #ccc;
-                    cursor: not-allowed;
-                 
-
+                
                 button {
-                    color: var(--color-primario);
-                    border: none;
-                    background-color: var(--color-secundario);
-                    width: 60px;
-                    height: 33px;
-                    font-family: var(--font);
-                    transform: translateX(-50%);
-                    margin-bottom: 5px;
-                    transition: background-color .25s ease-in-out, color .25s ease-in-out;
+                color: var(--color-primario);
+                border: none;
+                background-color: var(--color-secundario);
+                width: 60px;
+                height: 33px;
+                font-family: var(--font);
+                transform: translateX(-50%);
+                margin-bottom: 5px;
+                transition: background-color .25s ease-in-out, color .25s ease-in-out;
 
                     &:hover {
                         cursor: pointer;
                         background-color: var(--hover-color);
                         color: var(--color-secundario);
+                    }
+
+                    &:disabled {
+                        background-color: grey;
+                        color: var(--color-primario);
+                        cursor: not-allowed;
                     }
 
                 }
@@ -98,7 +99,6 @@
             height: 100%;
         }
     }
-}
 }
 
 

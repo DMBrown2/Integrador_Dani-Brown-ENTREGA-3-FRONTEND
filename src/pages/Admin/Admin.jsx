@@ -209,7 +209,7 @@ export default function Admin() {
         <div>
             <div className="titulo-descripcion">
                 <h1 className="titulo-admin">Administrador</h1>
-                <p>Hay un total de X productos</p>
+                <p>Hay un total de 8 productos</p>
             </div>
 
             <div className="admin-form-table">
@@ -234,9 +234,6 @@ export default function Admin() {
                             />
                             {errors.title && <span className="error">{errors.title.message}</span>}
 
-                            {/* {<errors className="title"></errors> && (
-                                <span className="input-error">{errors.title?.message}</span>
-                            )} */}
                         </div>
 
                         <div className="input-group">
@@ -317,7 +314,7 @@ export default function Admin() {
                             )}
                         </div>
 
-                        <button
+                        <button className='btn-cargar'
                             type="submit">
                             Cargar
                         </button>

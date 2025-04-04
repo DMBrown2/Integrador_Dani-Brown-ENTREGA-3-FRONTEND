@@ -18,7 +18,7 @@
     }
 }
 
-button {
+.btn-cargar {
     font-family: var(--font);
     color: var(--color-primario);
     border: none;
@@ -32,6 +32,7 @@ button {
         background-color: var(--hover-color);
         color: var(--color-secundario);
     }
+
 }
 
 .admin-form-table {

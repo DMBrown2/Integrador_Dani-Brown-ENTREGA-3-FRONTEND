@@ -15,11 +15,12 @@ export default function Order() {
                 <table className="order-table">
                     <thead>
                         <tr>
-                            <th>IMAGEN</th>
+                            <th>Imagen</th>
                             <th>Titulo</th>
                             <th>Precio</th>
                             <th>Cantidad</th>
                             <th>Total</th>
+                            <th>Eliminar</th>
                         </tr>
                     </thead>
                     <tbody>

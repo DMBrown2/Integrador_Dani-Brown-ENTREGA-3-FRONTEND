@@ -123,6 +123,7 @@ export default function Usuarios() {
                       maxLength: { value: 20, message: 'Max length is 20' },
                       minLength: { value: 3, message: 'Min length is 3' },
                     })}
+                    
                   />
 
                 </div>

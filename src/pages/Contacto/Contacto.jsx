@@ -80,7 +80,7 @@ export default function Contacto() {
                     minLength: { value: 3, message: 'Min length is 3' },
                   })}
                 />
-
+              {errors.email && <span>{errors.email.message}</span>}
               </div>
 
 
@@ -92,7 +92,7 @@ export default function Contacto() {
                   id="mensaje"
                   rows={5}
                   pattern="[A-Za-z0-9._+\-']+@[A-Za-z0-9.\-]+\.[A-Za-z]{2,}$"
-                  defaultValue={"                    "}
+                  defaultValue={"  "}
                   {...register('mensaje', {
                     required: {
                       value: true,
