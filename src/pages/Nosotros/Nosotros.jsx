@@ -114,16 +114,16 @@ export default function Nosotros() {
                             {" "}
                             {/* IMAGEN + ICONOS SOCIAL */}
                             <div className="img">
-                                <img src={pp} alt="" />
+                                <img src="https://media.istockphoto.com/id/1389348844/es/foto/foto-de-estudio-de-una-hermosa-joven-sonriendo-mientras-est%C3%A1-de-pie-sobre-un-fondo-gris.jpg?s=612x612&w=0&k=20&c=kUufmNoTnDcRbyeHhU1wRiip-fNjTWP9owjHf75frFQ=" alt="" />
                             </div>
                             <div className="card-icon-container">
                                 <div className="icon">
                                     <FontAwesomeIcon icon={faInstagram} />
-                                    <p className="handle-ig">@dani.brown</p>
+                                    <p className="handle-ig">@vale.brown</p>
                                 </div>
                                 <div className="icon">
                                     <FontAwesomeIcon icon={faLinkedin} />
-                                    <p className="handle-fb">daniela-brown-estevez</p>
+                                    <p className="handle-fb">vale-brown-estevez</p>
                                 </div>
                             </div>
                         </div>
@@ -134,7 +134,7 @@ export default function Nosotros() {
                                 Licenciada en Comunicación Publicitaria. Trabajó más de 10 años en
                                 agencias de publicidad, hasta que se dió cuenta que su verdadera
                                 pasión es vender libros, acercar conocimiento y armar una comunidad en
-                                torno a la cultura. Así nació <strong>Liber Express.</strong>
+                                torno a la cultura.
                             </p>
                         </div>
                     </div>

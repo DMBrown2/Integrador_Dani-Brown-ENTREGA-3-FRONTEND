@@ -15,8 +15,8 @@ export default function Card({product}) {
                 {" "}
                 {/* Imagen+STATUS+ICONOS+BOTON */}
                 <img
-                  src={product.image}
-                  alt={product.title}
+                  src={`${import.meta.env.VITE_API_URL_FILES}/products/${product.image}`}
+                  alt={product.name}
                   className="card-image"
                 />
                 <div className="card-status">
@@ -30,7 +30,7 @@ export default function Card({product}) {
                     <FontAwesomeIcon icon={faCodeCompare} className="compare" />
                   </div>
                   <div className="icon">
-                    <Link to={`products/${product.id}`} className="link" target='_blank' title="Ver detalle">
+                    <Link to={`products/${product._id}`} className="link" target='_blank' title="Ver detalle">
 
                     <FontAwesomeIcon icon={faMagnifyingGlass} className="magnifying-glass" />
 
@@ -48,7 +48,7 @@ export default function Card({product}) {
                 {/* GÉNERO */}
                 <h4 className="genero"> {product.genre} </h4>
                 {/* TITULO DEL LIBRO */}
-                <h4 className="titulo-libro">{product.title}</h4>
+                <h4 className="titulo-libro">{product.name}</h4>
                 {/* Seccion de valoraciones */}
                 <div className="card-rate">
                   <div className="icon-rate">

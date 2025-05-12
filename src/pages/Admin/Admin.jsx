@@ -7,6 +7,9 @@ import { useForm } from 'react-hook-form';
 import Swal from 'sweetalert2';
 
 const URL = import.meta.env.VITE_API_URL
+const URL_FILES = import.meta.env.VITE_API_URL_FILES;
+console.log("🔗 URL_FILES:", URL_FILES); // Esto debería mostrar http://localhost:4000
+
 
 export default function Admin() {
 
@@ -32,11 +35,11 @@ export default function Admin() {
         console.log("🛠️ editProduct cambió:", editProduct)
 
         if (editProduct) {
-            console.log("📌 editProduct existe:", editProduct.title);
-            console.log("🆔 ID del producto:", editProduct.id)
+            console.log("📌 editProduct existe:", editProduct.name);
+            console.log("🆔 ID del producto:", editProduct._id)
 
             setValue("image", editProduct.image)
-            setValue("title", editProduct.title || "", { shouldValidate: true })
+            setValue("name", editProduct.name || "", { shouldValidate: true })
             setValue("genre", editProduct.genre)
             setValue("category", editProduct.category)
             setValue("price", editProduct.price)
@@ -47,13 +50,13 @@ export default function Admin() {
         }
 
         // Hacer Scroll al formulario
-        document
-            .getElementById("titulo")
-            .scrollIntoView({ behavior: "smooth" });
+        // document
+        //     .getElementById("name")
+        //     .scrollIntoView({ behavior: "smooth" });
     }, [editProduct, setValue, reset])
 
     async function updateProduct(producto) {
-        if (!producto || !producto.id) {
+        if (!producto || !producto._id) {
             console.error("❌ Error: El producto no tiene un ID válido", producto);
             return;
         }
@@ -64,57 +67,51 @@ export default function Admin() {
     async function loadProducts() {
         try {
             const response = await axios.get(`${URL}/products`)
-            setProducts(response.data)
+            setProducts(response.data.products)
+            console.log("📦 Productos cargados:", response.data)
 
         } catch (error) {
             console.log(error)
         }
     }
 
-    handleSubmit((data) => {
-        console.log("🚀 Enviando formulario con datos:", data);
-    }, (errors) => {
-        console.error("❌ Errores de validación:", errors);
-    })
 
     async function onSubmit(data) {
-        console.log("🚀 Enviando datos del formulario...", data)
-        console.log("📦 Datos:", data)
-
-        if (!data.title) {
-            console.error("❌ Error: title está vacío");
-        }
 
         try {
 
-            if (editProduct && editProduct.id) {
+            const formData = new FormData()
 
-                const id = editProduct.id;
-
-                // if (!editProduct || !editProduct.id) {
-                //     console.error("❌ Error: editProduct no tiene un ID válido", editProduct);
-                //     return;
-                // }
-
-                const productToUpdate = {
-                    image: data.image,
-                    title: data.title,
-                    genre: data.genre,
-                    category: data.category,
-                    price: data.price,
-                    description: data.description,
-                }
-
-                console.log("📦 Datos a actualizar:", productToUpdate);
+            console.log("📦 Data del formulario:", data);
 
 
-                const response = await axios.put(`${URL}/products/${id}`, productToUpdate)
-                console.log("✅ Respuesta del servidor:", response.data)
+            formData.append("name", data.name)
+            formData.append("description", data.description)
+            formData.append("price", data.price)
+            formData.append("category", data.category)
+            formData.append("genre", data.genre)
+            
+            
+            if (data.image?.length) {
+                formData.append("image", data.image[0])
+            }
 
+            for (let pair of formData.entries()) {
+  console.log(pair[0], pair[1]);
+}
+
+            
+            if (editProduct) {
+
+               const response = await axios.put(`${URL}/products/${editProduct._id}`, formData, {
+  headers: {
+    "Content-Type": "multipart/form-data"
+  }
+});
                 //Actualizar el estado de los productos.
                 setProducts((prevProducts) =>
                     prevProducts.map((prod) =>
-                        prod.id === id ? response.data : prod
+                        prod._id === editProduct._id ? response.data.product : prod
                     )
                 );
 
@@ -129,22 +126,10 @@ export default function Admin() {
                 )
 
             } else {
-                const newProduct = {
-                    image: data.image,
-                    title: data.title,
-                    genre: data.genre,
-                    category: data.category,
-                    price: data.price,
-                    description: data.description,
-                    createdAt: new Date().toISOString(),
-                }
 
+                const response = await axios.post(`${URL}/products`, formData)
 
-                const response = await axios.post(`${URL}/products`, newProduct)
-
-                console.log(response)
-
-                setProducts([...products, response.data])
+                setProducts([...products, response.data.product])
                 reset()
 
                 Swal.fire(
@@ -154,7 +139,7 @@ export default function Admin() {
                 );
             }
 
-            setFocus("title")
+            setFocus("name")
 
         } catch (error) {
             console.log(error);
@@ -178,15 +163,15 @@ export default function Admin() {
                 cancelButtonColor: "#3085d6",
                 reverseButtons: true,
                 customClass: {
-                    cancelButton: "swal-cancel-btn", 
-                    confirmButton: "swal-confirm-btn", 
-                  },
+                    cancelButton: "swal-cancel-btn",
+                    confirmButton: "swal-confirm-btn",
+                },
             }).then(async (result) => {
                 if (result.isConfirmed) {
                     await axios.delete(`${URL}/products/${id}`);
 
                     const produtcsWithoutDeletedProduct = products.filter(
-                        (prod) => prod.id !== id
+                        (prod) => prod._id !== id
                     );
                     setProducts(produtcsWithoutDeletedProduct);
                     Swal.fire(
@@ -209,7 +194,7 @@ export default function Admin() {
         <div>
             <div className="titulo-descripcion">
                 <h1 className="titulo-admin">Administrador</h1>
-                <p>Hay un total de 8 productos</p>
+                <p>Hay un total de {products.length} productos</p>
             </div>
 
             <div className="admin-form-table">
@@ -223,16 +208,24 @@ export default function Admin() {
 
                         <div className="input-imagen">
                             <label htmlFor="image">Imagen de producto: </label>
-                            <input type="file" id="image" name="image" accept="image/*" />
+                            <input
+                                type="file"
+                                accept="image/*"
+                                id="image"
+                                name="image"
+                                {...register("image", { required: editProduct ? false : "La imagen es obligatoria" })}
+                            />
+                            {errors.image && <span className="input-error">{errors.image.message}</span>}
+
                         </div>
 
                         <div className="input-group">
-                            <label htmlFor="" id='titulo'>Título: </label>
+                            <label htmlFor="" id='titulo'>Nombre: </label>
                             <input
                                 type="text"
-                                {...register("title", { required: "El título es obligatorio" })}
+                                {...register("name", { required: "El nombre es obligatorio" })}
                             />
-                            {errors.title && <span className="error">{errors.title.message}</span>}
+                            {errors.name && <span className="error">{errors.name.message}</span>}
 
                         </div>
 
@@ -246,7 +239,7 @@ export default function Admin() {
                                     minLength: { value: 3, message: 'Min length is 3' },
                                 })}
                             />
-                            {errors.name && (
+                            {errors.genre && (
                                 <span className="input-error">{errors.genre?.message}</span>
                             )}
                         </div>
@@ -303,7 +296,7 @@ export default function Admin() {
                                         value: true,
                                         message: 'This field is required',
                                     },
-                                    maxLength: { value: 500, message: 'Max length is 500' },
+                                    maxLength: { value: 2000, message: 'Max length is 2000' },
                                     minLength: { value: 5, message: 'Min length is 5' },
                                 })}
                             ></textarea>
@@ -330,7 +323,7 @@ export default function Admin() {
                         <thead>
                             <tr>
                                 <th>Imagen</th>
-                                <th>Título</th>
+                                <th>Nombre</th>
                                 <th>Género</th>
                                 <th>Categoria</th>
                                 <th>Precio</th>
@@ -341,36 +334,39 @@ export default function Admin() {
                         <tbody>
                             {/* Cuerpo de la tabla */}
 
-                            {products.map(producto => (
+                            {products.map(producto => {
 
+                                console.log("🖼️ producto.image:", producto.image);
 
+                                return (
 
-                                <tr key={producto.id}>
-                                    <td className="image-cell">
-                                        <img
-                                            src={producto.image}
-                                            className="table-image"
-                                        />
-                                    </td>
-                                    <td className="name-cell">{producto.title}</td>
-                                    <td className="genero-cell">{producto.genre}</td>
-                                    <td className="status-cell">{producto.category}</td>
-                                    <td className="precio-cell">${producto.price}</td>
-                                    <td className="coment-cell">
-                                        {producto.description}
-                                    </td>
-                                    <td className="tools-cell">
-                                        <div className="icon-container">
-                                            <button onClick={() => updateProduct(producto)} className="btn">
-                                                <FontAwesomeIcon icon={faEdit} />
-                                            </button>
-                                            <button onClick={() => deleteProduct(producto.id)} className="btn">
-                                                <FontAwesomeIcon icon={faTrash} />
-                                            </button>
-                                        </div>
-                                    </td>
-                                </tr>
-                            ))}
+                                    <tr key={producto._id}>
+
+                                        <td className="image-cell">
+                                           <img src={`${import.meta.env.VITE_API_URL_FILES}/products/${producto.image}`}className="table-image" />
+
+                                        </td>
+                                        <td className="name-cell">{producto.name}</td>
+                                        <td className="genero-cell">{producto.genre}</td>
+                                        <td className="status-cell">{producto.category}</td>
+                                        <td className="precio-cell">${producto.price}</td>
+                                        <td className="coment-cell">
+                                            {producto.description}
+                                        </td>
+                                        <td className="tools-cell">
+                                            <div className="icon-container">
+                                                <button onClick={() => updateProduct(producto)} className="btn">
+                                                    <FontAwesomeIcon icon={faEdit} />
+                                                </button>
+                                                <button onClick={() => deleteProduct(producto._id)} className="btn">
+                                                    <FontAwesomeIcon icon={faTrash} />
+                                                </button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                )
+
+                            })}
 
 
                         </tbody>

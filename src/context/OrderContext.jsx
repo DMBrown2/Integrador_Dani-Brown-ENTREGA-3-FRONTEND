@@ -35,11 +35,11 @@ function OrderProvider({ children }) {
 
   function addToCart(product, quantity = 1, showAlert = true) {
     setCart((prevCart) => {
-      const productInCart = prevCart.find((item) => item.id === product.id);
+      const productInCart = prevCart.find((item) => item._id === product._id);
   
       if (productInCart) {
         return prevCart.map((item) =>
-          item.id === product.id
+          item._id === product._id
             ? { ...item, quantity: item.quantity + quantity } // Sumar la cantidad seleccionada
             : item
         );
@@ -51,7 +51,7 @@ function OrderProvider({ children }) {
     if (showAlert) {
       Swal.fire({
         title: "Producto agregado con éxito!",
-        text: `${product.title} se agregó al carrito`,
+        text: `${product.name} se agregó al carrito`,
         icon: "success",
         toast: true,
         position: "top-end",
@@ -65,7 +65,7 @@ function OrderProvider({ children }) {
   function increaseQuantity(product) {
     setCart((prevCart) =>
       prevCart.map((item) =>
-        item.id === product.id
+        item._id === product._id
           ? { ...item, quantity: item.quantity + 1 } // Asegurar que solo suma 1
           : item
       )
@@ -76,14 +76,14 @@ function OrderProvider({ children }) {
 
 
 function removeFromCart (productID) {
-  setCart((prevCart) => prevCart.filter((item) => item.id !== productID	))
+  setCart((prevCart) => prevCart.filter((item) => item._id !== productID	))
 }
   
 
 function decreaseQuantity(product) {
   setCart((prevCart) =>
     prevCart.map((item) =>
-      item.id === product.id && item.quantity > 1
+      item._id === product._id && item.quantity > 1
         ? { ...item, quantity: item.quantity - 1 }
         : item
     )
@@ -98,7 +98,7 @@ function updateQuantity(product, newQuantity) {
 
   setCart((prevCart) =>
     prevCart.map((item) =>
-      item.id === product.id ? { ...item, quantity } : item
+      item._id === product._id ? { ...item, quantity } : item
     )
   )
 }

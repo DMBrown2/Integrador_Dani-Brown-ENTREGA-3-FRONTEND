@@ -1,12 +1,13 @@
+import { URL } from "../../config/env.config";
 import { useState, useEffect } from "react";
+import { useForm } from "react-hook-form";
 import axios from "axios";
 import Swal from "sweetalert2";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
-import { useForm } from "react-hook-form";
 import './usuarios.css'
 
-const URL = import.meta.env.VITE_API_URL
+
 
 export default function Usuarios() {
   const [usuarios, setUsuarios] = useState([]);
@@ -36,6 +37,17 @@ export default function Usuarios() {
   // Agregar usuario (POST)
   const onSubmit = async (data) => {
     try {
+      const formData = new FormData();
+      formData.append("name", data.name);
+      formData.append("email", data.email);
+      formData.append("password", data.password);
+      formData.append("country", data.country);
+      formData.append("role", data.role || "user");
+
+      if (data.image?.length) {
+        formData.append("image", data.image[0]);
+      }
+      // Enviar la solicitud POST
       await axios.post(`${URL}/users`, data);
       Swal.fire("¡Usuario agregado!", "El usuario ha sido registrado.", "success");
       reset(); // Limpiar formulario
@@ -64,7 +76,7 @@ export default function Usuarios() {
         await axios.delete(`${URL}/users/${id}`);
         obtenerUsuarios();
 
-       Swal.fire("¡Eliminado!", "Usuario eliminado correctamente.", "success")
+        Swal.fire("¡Eliminado!", "Usuario eliminado correctamente.", "success")
 
 
       } catch (error) {
@@ -88,12 +100,12 @@ export default function Usuarios() {
                   <label htmlFor="NOMBRE"> Nombre y Apellido:</label>
                   <input
                     type="text"
-                    name="nombre"
-                    id="nombre"
+                    name="name"
+                    id="name"
                     placeholder="Nombre y Apellido"
                     pattern="^[a-zA-Z ]+$"
                     autoComplete="on"
-                    {...register('nombre', {
+                    {...register('name', {
                       required: {
                         value: true,
                         message: 'Campo requerido',
@@ -102,31 +114,77 @@ export default function Usuarios() {
                       minLength: { value: 3, message: 'Min length is 3' },
                     })}
                   />
-                  {errors.nombre && <span>{errors.nombre.message}</span>}
+                  {errors.name && <span>{errors.name.message}</span>}
                 </div>
 
 
                 <div className="input-email">
-                  <label htmlFor="correo">Email:</label>
+                  <label htmlFor="email">Email:</label>
                   <input
                     type="email"
                     name="email"
                     id="email"
                     placeholder="email"
                     pattern="[A-Za-z0-9._+\-']+@[A-Za-z0-9.\-]+\.[A-Za-z]{2,}$"
-                    autoComplete="on"
                     {...register('email', {
                       required: {
                         value: true,
-                        message: 'This field is required',
+                        message: 'Campo requerido',
                       },
-                      maxLength: { value: 20, message: 'Max length is 20' },
+                      maxLength: { value: 200, message: 'Max length is 200' },
                       minLength: { value: 3, message: 'Min length is 3' },
                     })}
-                    
                   />
-
+                  {errors.email && <span>{errors.email.message}</span>}
                 </div>
+
+                <div className="input-password">
+                  <label htmlFor="password">Contraseña:</label>
+                  <input
+                    type="password"
+                    id="password"
+                    {...register("password", {
+                      required: "Campo requerido",
+                      minLength: { value: 4, message: "Mínimo 4 caracteres" },
+                    })}
+                  />
+                  {errors.password && <span>{errors.password.message}</span>}
+                </div>
+
+                <div className="input-country">
+                  <label htmlFor="country">País:</label>
+                  <input
+                    type="text"
+                    id="country"
+                    {...register("country", {
+                      required: "Campo requerido",
+                      minLength: { value: 2, message: "Mínimo 2 caracteres" },
+                    })}
+                  />
+                  {errors.country && <span>{errors.country.message}</span>}
+                </div>
+
+                <div className="input-message">
+                  <label htmlFor="message">Mensaje:</label>
+                  <textarea
+                    type="text"
+                    name="message"
+                    id="message"
+                    rows={5}
+                    pattern="[A-Za-z0-9._+\-']+@[A-Za-z0-9.\-]+\.[A-Za-z]{2,}$"
+                    defaultValue={"  "}
+                    {...register('message', {
+                      required: {
+                        value: true,
+                        message: 'Campo requerido',
+                      },
+                      minLength: { value: 6, message: 'Debe tener al menos 6 caracteres' },
+                      maxLength: { value: 150, message: 'Máximo 150 caracteres' },
+                    })}
+                  />
+                  {errors.message && <span>{errors.message.message}</span>}
+                </div>
+
 
                 <div className="btn-contactar">
                   <button
@@ -150,26 +208,31 @@ export default function Usuarios() {
                   <th>ID</th>
                   <th>Nombre</th>
                   <th>Email</th>
+                  <th>País</th>
                   <th>Mensaje</th>
+                  <th>Rol</th>
                   <th>Eliminar</th>
                 </tr>
               </thead>
               <tbody>
                 {usuarios.map((user) => (
-                  <tr key={user.id}>
-                    <td>{user.id}</td>
-                    <td>{user.nombre}</td>
+                  <tr key={user._id}>
+                    <td>{user._id}</td>
+                    <td>{user.name}</td>
                     <td>{user.email}</td>
-                    <td>{user.mensaje}</td>
+                    <td>{user.country}</td>
+                    <td>{user.message}</td>
+                    <td>{user.role}</td>
                     <td>
-                      <button onClick={() => eliminarUsuario(user.id)}><FontAwesomeIcon className="icon" icon={faTrash} /></button>
+                      {/* acciones como eliminar */}
+                      <button onClick={() => eliminarUsuario(user._id)}><FontAwesomeIcon className="icon" icon={faTrash} /></button>
                     </td>
                   </tr>
                 ))}
               </tbody>
             </table>
           </div>
-        
+
         </div>
       </div>
 

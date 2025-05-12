@@ -2,8 +2,9 @@ import { useForm } from 'react-hook-form';
 import './Contacto.css';
 import Swal from "sweetalert2";
 import axios from "axios";
+import { URL} from "../../config/env.config";
 
-const URL = import.meta.env.VITE_API_URL
+// const URL = import.meta.env.VITE_API_URL
 
 export default function Contacto() {
 
@@ -15,7 +16,7 @@ export default function Contacto() {
   } = useForm({ mode: "onChange" });
 
   const onSubmit = async (data) => {
-    console.log("Enviando datos a MockAPI:", data)
+    console.log("Enviando datos", data.message)
     
     try {
      await axios.post(`${URL}/users`, data);
@@ -44,12 +45,12 @@ export default function Contacto() {
                 <label htmlFor="NOMBRE"> Nombre y Apellido:</label>
                 <input
                   type="text"
-                  name="nombre"
-                  id="nombre"
+                  name="name"
+                  id="name"
                   placeholder="Nombre y Apellido"
                   pattern="^[a-zA-Z ]+$"
                   autoComplete="on"
-                  {...register('nombre', {
+                  {...register('name', {
                     required: {
                       value: true,
                       message: 'Campo requerido',
@@ -58,42 +59,66 @@ export default function Contacto() {
                     minLength: { value: 3, message: 'Min length is 3' },
                   })}
                 />
-                 {errors.nombre && <span>{errors.nombre.message}</span>}
+                 {errors.name && <span>{errors.name.message}</span>}
               </div>
 
 
               <div className="input-email">
-                <label htmlFor="correo">Email:</label>
+                <label htmlFor="email">Email:</label>
                 <input
                   type="email"
                   name="email"
                   id="email"
                   placeholder="email"
                   pattern="[A-Za-z0-9._+\-']+@[A-Za-z0-9.\-]+\.[A-Za-z]{2,}$"
-                  autoComplete="on"
                   {...register('email', {
                     required: {
                       value: true,
-                      message: 'This field is required',
+                      message: 'Campo requerido',
                     },
-                    maxLength: { value: 20, message: 'Max length is 20' },
+                    maxLength: { value: 200, message: 'Max length is 200' },
                     minLength: { value: 3, message: 'Min length is 3' },
                   })}
                 />
               {errors.email && <span>{errors.email.message}</span>}
               </div>
 
+<div className="input-password">
+    <label htmlFor="password">Contraseña:</label>
+    <input
+      type="password"
+      id="password"
+      {...register("password", {
+        required: "Campo requerido",
+        minLength: { value: 4, message: "Mínimo 4 caracteres" },
+      })}
+    />
+    {errors.password && <span>{errors.password.message}</span>}
+  </div>
 
-              <div className="input-mensaje">
-                <label htmlFor="mensaje">Mensaje:</label>
+  <div className="input-country">
+    <label htmlFor="country">País:</label>
+    <input
+      type="text"
+      id="country"
+      {...register("country", {
+        required: "Campo requerido",
+        minLength: { value: 2, message: "Mínimo 2 caracteres" },
+      })}
+    />
+    {errors.country && <span>{errors.country.message}</span>}
+  </div>
+
+              <div className="input-message">
+                <label htmlFor="message">Mensaje:</label>
                 <textarea
                   type="text"
-                  name="mensaje"
-                  id="mensaje"
+                  name="message"
+                  id="message"
                   rows={5}
                   pattern="[A-Za-z0-9._+\-']+@[A-Za-z0-9.\-]+\.[A-Za-z]{2,}$"
                   defaultValue={"  "}
-                  {...register('mensaje', {
+                  {...register('message', {
                     required: {
                       value: true,
                       message: 'Campo requerido',
@@ -102,7 +127,7 @@ export default function Contacto() {
                     maxLength: { value: 150, message: 'Máximo 150 caracteres' },
                   })}
                 />
-                {errors.mensaje && <span>{errors.mensaje.message}</span>}
+                {errors.message && <span>{errors.message.message}</span>}
               </div>
 
               <div className="btn-contactar">
@@ -115,6 +140,8 @@ export default function Contacto() {
               </div>
             </div>
           </form>
+
+          
           <div className="mapa-contacto">
             <iframe
               className="mapa"
