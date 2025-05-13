@@ -1,32 +1,60 @@
-// import { set } from "react-hook-form";
 import { URL } from "../../config/env.config";
 import ProductCard from "../ProductCard/ProductCard";
-import "./ProductContainer.css";
 import axios from "axios";
 import { useEffect, useState } from "react";
 
 
-// const URL = import.meta.env.VITE_API_URL
 
 export default function ProductContainer() {
 
   const [products, setProducts] = useState([])
+  const [page, setPage] = useState(1); // Página actual
+  const [hasMore, setHasMore] = useState(true); // Si quedan productos para cargar
+  const limit = 8; // Cantidad por página
 
   useEffect(() => {
-    getProducts()
+    loadProducts(1)
   }, [])
 
-  const getProducts = async () => {
+  // const getProducts = async () => {
+  //   try {
+  //     const response = await axios.get(`${URL}/products`)
+  //     const productos = response.data.products
+
+  //     setProducts(productos)
+
+  //   } catch (error) {
+  //     console.log(error)   
+  //   }
+  // }
+
+  const loadProducts = async (pageToLoad) => {
     try {
-      const response = await axios.get(`${URL}/products`)
-      const productos = response.data.products
+      const response = await axios.get(`${URL}/products?page=${pageToLoad}&limit=${limit}`);
+      const newProducts = response.data.products;
 
-      setProducts(productos)
+      // Si recibimos menos que el límite, no hay más productos para mostrar
+      if (newProducts.length < limit) {
+        setHasMore(false);
+      }
 
+      // Agregar los productos nuevos
+      if (pageToLoad === 1) {
+        setProducts(newProducts); // para el primer render o al crear un producto nuevo
+      } else {
+        setProducts((prev) => [...prev, ...newProducts]);
+      }
     } catch (error) {
-      console.log(error)   
+      console.error("❌ Error al obtener productos:", error);
     }
-  }
+  };
+
+  // Botón "Ver más"
+  const handleVerMas = () => {
+    const nextPage = page + 1;
+    setPage(nextPage);
+    loadProducts(nextPage);
+  };
 
   return (
     <section className="product-gallery">
@@ -40,11 +68,13 @@ export default function ProductContainer() {
       product={product} />
       ))}
 
-      <div className="btn-vermas">
-        <button>Ver más</button>
-      </div>
-    </div>
+      {hasMore && (
+        <div className="btn-vermas">
+          <button onClick={handleVerMas} className="button">Ver más</button>
+        </div>
+      )}
 
+      </div>
   </section>
   )
 }

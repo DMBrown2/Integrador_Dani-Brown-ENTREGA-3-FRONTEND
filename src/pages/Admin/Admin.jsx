@@ -66,7 +66,8 @@ export default function Admin() {
 
     async function loadProducts() {
         try {
-            const response = await axios.get(`${URL}/products`)
+            const response = await axios.get(`${URL}/products?limit=1000`)
+
             setProducts(response.data.products)
             console.log("📦 Productos cargados:", response.data)
 
