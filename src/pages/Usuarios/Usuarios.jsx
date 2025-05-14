@@ -5,7 +5,7 @@ import axios from "axios";
 import Swal from "sweetalert2";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
-import './usuarios.css'
+import './Usuarios.css'
 
 
 
